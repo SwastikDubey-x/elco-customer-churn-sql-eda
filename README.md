@@ -46,8 +46,8 @@ SELECT
         END AS REAL
     ) AS TotalCharges,
     Churn
-FROM customer_churn;
----
+FROM customer_churn;```
+
 ### 🔍 Advanced SQL Queries & Analysis
 1. **Aggregating Revenue Loss by Contract Tier**
 Used conditional aggregation (SUM(CASE WHEN...)) to evaluate churn percentage and MRR impact simultaneously across contract types:
