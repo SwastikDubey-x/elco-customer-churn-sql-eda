@@ -47,38 +47,3 @@ SELECT
     ) AS TotalCharges,
     Churn
 FROM customer_churn;
-### 🔍 Advanced SQL Queries & Analysis
-1. **Aggregating Revenue Loss by Contract Tier**
-Used conditional aggregation (SUM(CASE WHEN...)) to evaluate churn percentage and MRR impact simultaneously across contract types:
-SELECT 
-    Contract,
-    COUNT(customerID) as Total_Customers,
-    SUM(CASE WHEN Churn = 'Yes' THEN 1 ELSE 0 END) as Churned_Customers,
-    ROUND(SUM(CASE WHEN Churn = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(customerID), 2) as Churn_Rate_Percentage,
-    ROUND(SUM(CASE WHEN Churn = 'Yes' THEN MonthlyCharges ELSE 0 END), 2) as Lost_Monthly_Revenue
-FROM clean_customer_churn
-GROUP BY Contract
-ORDER BY Churn_Rate_Percentage DESC;
-2. Window Functions: Ranking High-Value Churners
-Applied PARTITION BY and DENSE_RANK() within a Common Table Expression (CTE) to benchmark churned customer billing against tier averages:
-WITH RankedChurners AS (
-    SELECT 
-        customerID,
-        Contract,
-        MonthlyCharges,
-        ROUND(AVG(MonthlyCharges) OVER(PARTITION BY Contract), 2) as Avg_Contract_MonthlyCharge,
-        ROUND(MonthlyCharges - AVG(MonthlyCharges) OVER(PARTITION BY Contract), 2) as Diff_From_Avg,
-        DENSE_RANK() OVER(PARTITION BY Contract ORDER BY MonthlyCharges DESC) as Charge_Rank
-    FROM clean_customer_churn
-    WHERE Churn = 'Yes'
-)
-SELECT * 
-FROM RankedChurners
-WHERE Charge_Rank <= 3;
-📈 Visual Exploratory Data Analysis
-# Code snippet used to generate Seaborn bar plots comparing churn rates
-sns.barplot(data=contract_data, x='Contract', y='Churn_Rate', palette='Reds_d')
-🚀 Strategic Recommendations
-Incentivise Plan Upgrades: Offer annual plan discounts to Month-to-Month subscribers within their first 60 days to lock in longer tenure.
-
-Targeted Interventions: Set up automated billing alerts for high-value accounts whose monthly bills deviate significantly from tier averages.
