@@ -48,8 +48,8 @@ SELECT
     Churn
 FROM customer_churn;
 ```
-🔍 Advanced SQL Queries & Analysis
-1. Aggregating Revenue Loss by Contract Tier
+##🔍 Advanced SQL Queries & Analysis
+1. **Aggregating Revenue Loss by Contract Tier**
 Used conditional aggregation (SUM(CASE WHEN...)) to evaluate churn percentage and MRR impact simultaneously across contract types:
 ```
 SELECT 
@@ -62,7 +62,7 @@ FROM clean_customer_churn
 GROUP BY Contract
 ORDER BY Churn_Rate_Percentage DESC;
 ```
-2. Window Functions: Ranking High-Value Churners
+2. **Window Functions: Ranking High-Value Churners**
 Applied PARTITION BY and DENSE_RANK() within a Common Table Expression (CTE) to benchmark churned customer billing against tier averages:
 ```
 WITH RankedChurners AS (
@@ -80,12 +80,12 @@ SELECT *
 FROM RankedChurners
 WHERE Charge_Rank <= 3;
 ```
-📈 Visual Exploratory Data Analysis
+##📈 Visual Exploratory Data Analysis
 ```
 # Code snippet used to generate Seaborn bar plots comparing churn rates
 sns.barplot(data=contract_data, x='Contract', y='Churn_Rate', palette='Reds_d')
 ```
-🚀 Strategic Recommendations
+##🚀 Strategic Recommendations
 + Incentivise Plan Upgrades: Offer annual plan discounts to Month-to-Month subscribers within their first 60 days to lock in longer tenure.
 
 + Targeted Interventions: Set up automated billing alerts for high-value accounts whose monthly bills deviate significantly from tier averages.
