@@ -17,7 +17,7 @@ The primary objective was to uncover structural churn drivers and quantify month
 
 ## 💡 Key Business Insights
 
-1. **Contract Type Drive Retention:** 
+1. **Contract Type Drives Retention:** 
    * **Month-to-month contracts** suffer from a staggering **42.71% churn rate**, accounting for **$120,847.10** in lost monthly recurring revenue (MRR).
    * By contrast, **Two-year contracts** demonstrate exceptional stability with only a **2.83% churn rate**.
 2. **Financial Revenue Impact:** Month-to-month cancellations account for over **89% of total lost monthly revenue**, indicating that converting users to long-term plans is the single highest-leverage retention strategy.
@@ -29,7 +29,7 @@ The primary objective was to uncover structural churn drivers and quantify month
 
 Raw data imported from transactional sources often contains incorrect data types and hidden blank strings. 
 
-### 1. Schema Sanitisation & Handling Dirty Values
+### Schema Sanitization & Handling Dirty Values
 The `TotalCharges` field was originally imported as `TEXT` due to blank space characters (`' '`) for zero-tenure customers. A clean dynamic **SQL View** was established to cast data types safely without mutating raw tables:
 
 ```sql
@@ -46,8 +46,7 @@ SELECT
         END AS REAL
     ) AS TotalCharges,
     Churn
-FROM customer_churn;````
-
+FROM customer_churn;
 ### 🔍 Advanced SQL Queries & Analysis
 1. **Aggregating Revenue Loss by Contract Tier**
 Used conditional aggregation (SUM(CASE WHEN...)) to evaluate churn percentage and MRR impact simultaneously across contract types:
